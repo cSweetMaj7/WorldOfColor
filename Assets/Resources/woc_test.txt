@@ -7,6 +7,7 @@
             "selections": [{
                 "select": "colTo",
                 "deselect": 2,
+                "deselect_rows": [0,1,2,3],
                 "col": 0,
                 "to": 12
             }]
@@ -16,8 +17,10 @@
             "selections": [{
                 "select": "colTo",
                 "deselect": 2,
-                "col": 30,
-                "to": 45
+                "deselect_rows": [0,1,2,3],
+                "col": 28,
+                "to": 45,
+                "deselect_row": 0
             }]
         },
         {
@@ -119,7 +122,8 @@
             "name" : "col_one",
             "selections" : [{
                 "select" : "col",
-                "col" : 0
+                "col" : 0,
+                "deselect_rows": [19]
             }]
         },
         {
@@ -171,7 +175,7 @@
         {
             "index": 31168,
             "action": "on",
-            "duration" : "4",
+            "duration" : "4.75",
             "selection": [
                 {
                     "select": "row_one"
@@ -182,10 +186,10 @@
                 "#04c950"
             ],
             "color_select": "sequential",
-            "target_color": "#b5002d",
+            "target_color": "#ff0000",
             "gravity": "120",
-            "target_gravity": 12,
-            "advance_gravity": "0.75"
+            "target_gravity": 10,
+            "advance_gravity": "0.41"
         },
         {
             "index": 31169,
@@ -427,7 +431,7 @@
         {
             "index": 41519,
             "action": "on",
-            "duration" : "10.67",
+            "duration" : "9.5",
             "selection": [
                 {
                     "select": "single",
@@ -436,14 +440,14 @@
                 }
             ],
             "colors": [
-                "#ff9500"
+                "#ff0000"
             ],
             "gravity": "15"
         },
         {
             "index": 41520,
             "action": "chase",
-            "duration" : "10.5",
+            "duration" : "10",
             "selection": [
                 {
                     "select": "row_one"
@@ -460,7 +464,7 @@
         {
             "index": 44332,
             "action": "on",
-            "duration" : "7.9",
+            "duration" : "6.9",
             "selection": [
                 {
                     "select": "single",
@@ -469,7 +473,7 @@
                 }
             ],
             "colors": [
-                "#ff9500"
+                "#0d00ff"
             ],
             "gravity": "15"
         },
@@ -492,7 +496,7 @@
         {
             "index": 47010,
             "action": "on",
-            "duration" : "5.1",
+            "duration" : "4.1",
             "selection": [
                 {
                     "select": "single",
@@ -501,7 +505,7 @@
                 }
             ],
             "colors": [
-                "#ff9500"
+                "#00ff1e"
             ],
             "gravity": "15"
         },
@@ -591,7 +595,7 @@
             "gravity": "40"
         },
         {
-            "index": 58713,
+            "index": 58600,
             "action": "on",
             "duration" : "3.0",
             "selection": [
@@ -876,7 +880,7 @@
             ],
             "colors": [
                 "#ff9500",
-                "#9e00a1"
+                "#ff0004"
             ],
             "color_select": "sequential",
             "gravity": "20"
@@ -892,7 +896,7 @@
             ],
             "colors": [
                 "#ff9500",
-                "#9e00a1"
+                "#00ffdd"
             ],
             "color_select": "sequential",
             "gravity": "20"
@@ -914,7 +918,6 @@
                 "#ff0900"
             ],
             "color_select": "sequential",
-            "target_color": "#b5002d",
             "gravity": "20",
             "target_gravity": "100",
             "advance_gravity": "0.2"
@@ -961,6 +964,21 @@
             "gravity": "100",
             "target_gravity": "10",
             "advance_gravity": "1"
+        }, {
+            "index": 84000,
+            "action": "on",
+            "duration": "5.0",
+            "selection": [{
+                "select": "single",
+                "row": 10,
+                "col": 20
+            }],
+            "colors": [
+                "#ffd000"
+            ],
+            "gravity": "10",
+            "target_gravity": "120",
+            "advance_gravity": "0.1"
         }
 	]
 }

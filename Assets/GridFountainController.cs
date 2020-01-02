@@ -188,7 +188,12 @@ public class GridFountainController : MonoBehaviour
             int deselect = selectionsIn[i].deselect;
 
             if (selectionRegister.ContainsKey(registerName))
-            {
+            {   // report the original index here to make debugging easier
+                if(debug)
+                {
+                    Debug.Log((nextEvent - globalOffsetMs) + ": Register Select: " + registerName);
+                }
+                
                 // we can reliably get this register
                 return getRegisterSelectionByName(registerName, reverse);
             }
@@ -237,6 +242,33 @@ public class GridFountainController : MonoBehaviour
                         thisSelection.Add(orderedFountains[o][n]);
                     }
                 }
+            }
+
+            List<GridFountain> filtered = new List<GridFountain>();
+            // deselect rows and cols
+
+            if (selection.deselect_rows != null && selection.deselect_rows.Length > 0)
+            {
+                foreach (GridFountain resultFountain in thisSelection)
+                {
+                    bool add = true;
+                    foreach (int row in selection.deselect_rows)
+                    {
+                        if (resultFountain.row == row)
+                        {
+                            add = false;
+                            break;
+                        }
+                    }
+                    if(add)
+                    {
+                        filtered.Add(resultFountain);
+                    }
+                }
+            }
+            if(filtered.Count > 0)
+            {
+                thisSelection = filtered;
             }
 
             // apply the deselect to just this selection, then add that to the result
@@ -464,8 +496,11 @@ public class GridFountainController : MonoBehaviour
     {
         for (int i = 0; i < fountainsIn.Length; i++)
         {
-            var main = fountainsIn[i].fountainParticles.main;
-            main.gravityModifier = gravity;
+            if(!fountainsIn[i].active)
+            {
+                var main = fountainsIn[i].fountainParticles.main;
+                main.gravityModifier = gravity;
+            }
         }
     }
 
@@ -489,7 +524,10 @@ public class GridFountainController : MonoBehaviour
                         {
                             selectInd = 0;
                         }
-                        fountainsIn[f].setColor(colors[selectInd++], targetColor, lerpDuration);
+                        if(!fountainsIn[f].active)
+                        {
+                            fountainsIn[f].setColor(colors[selectInd++], targetColor, lerpDuration);
+                        }
                     }
                     break;
                 }
@@ -498,7 +536,10 @@ public class GridFountainController : MonoBehaviour
                     // select a color from the list at random and set it to this fountain
                     System.Random rand = new System.Random();
                     int colorInd = rand.Next(0, colors.Length - 1);
-                    thisFountain.setColor(colors[colorInd], targetColor, lerpDuration);
+                    if(!thisFountain.active)
+                    {
+                        thisFountain.setColor(colors[colorInd], targetColor, lerpDuration);
+                    }
                 }
             }
         }
@@ -631,4 +672,5 @@ public class Selection
     public int to;
     public string select;
     public int deselect;
+    public int[] deselect_rows;
 }

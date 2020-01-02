@@ -13,7 +13,7 @@ public class GridFountain : MonoBehaviour
     public int row = -1;
     public int col = -1;
 
-    private bool active;
+    public bool active;
     private bool advanceGravity = false;
     private float advanceGravityBy;
     private float targetGravity;
@@ -72,20 +72,27 @@ public class GridFountain : MonoBehaviour
 
     public void on(float timeOutSeconds = 0f, float targetGravity = 0f, float advanceGravity = 0f)
     {
-        active = true;
-        if(fountainParticles)
+        if(active)
         {
-            fountainParticles.Play();
-            StartCoroutine(activateGridLight());
-        }
+            //Debug.LogWarning("GridFountain.on(): Fountain already active at " + row + "," + col);
+        } else
+        {
+            active = true;
+            if (fountainParticles)
+            {
+                fountainParticles.Play();
+                StartCoroutine(activateGridLight());
+            }
 
-        if(timeOutSeconds > Mathf.Epsilon)
-        {
-            this.targetGravity = targetGravity;
-            advanceGravityBy = advanceGravity;
-            // coroutine that delays turning this off
-            StartCoroutine(delayOff(timeOutSeconds)); 
+            if (timeOutSeconds > Mathf.Epsilon)
+            {
+                this.targetGravity = targetGravity;
+                advanceGravityBy = advanceGravity;
+                // coroutine that delays turning this off
+                StartCoroutine(delayOff(timeOutSeconds));
+            }
         }
+        
     }
 
     IEnumerator activateGridLight()
@@ -93,6 +100,11 @@ public class GridFountain : MonoBehaviour
         // put a small delay on this to sync it better with the particle emission
         yield return new WaitForSeconds(0.1f);
         gridLight.enabled = true;
+        // see if we should change gravity on update
+        if (targetGravity > Mathf.Epsilon && advanceGravityBy > Mathf.Epsilon)
+        {
+            advanceGravity = true;
+        }
         fountainBase.gameObject.SetActive(true);
     }
 
@@ -102,12 +114,13 @@ public class GridFountain : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         gridLight.enabled = false;
         fountainBase.gameObject.SetActive(false);
+        active = false;
     }
 
     public void off()
     {
-        active = false;
-        if(fountainParticles)
+        
+        if (fountainParticles)
         {
             fountainParticles.Stop();
             StartCoroutine(deactivateGridLight());
@@ -116,12 +129,6 @@ public class GridFountain : MonoBehaviour
 
     IEnumerator delayOff(float timeoutSeconds)
     {
-        // see if we should change gravity on update
-        if(targetGravity > Mathf.Epsilon && advanceGravityBy > Mathf.Epsilon)
-        {
-            advanceGravity = true;
-        }
-
         yield return new WaitForSeconds(timeoutSeconds);
         off();
     }
@@ -148,7 +155,7 @@ public class GridFountain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(fountainParticles != null && advanceGravity)
+        if(active && fountainParticles != null && advanceGravity)
         {
             // continue to advance gravity by provided value until we hit the target
             var main = fountainParticles.main;
@@ -173,7 +180,7 @@ public class GridFountain : MonoBehaviour
         }
 
         // lerp color
-        if(startColor != targetColor && fountainParticles != null && lerped < lerpDuration)
+        if(active && startColor != targetColor && fountainParticles != null && lerped < lerpDuration)
         {
             var main = fountainParticles.main;
             Color newColor = Color.Lerp(startColor, targetColor, lerped / 4);
