@@ -1,3 +1,5 @@
+[![Watch the video](https://i.imgur.com/yfkhERH.png)](https://www.youtube.com/watch?v=4i87jnaYZuE)
+
 # Summary
 
 I started this fun project as a way to practice turning the ideas in my head into reality. While watching the World of Color show again late last year I found myself thinking deeply about what it would take to recreate the entire show digitally and what kind of advantages that might entail from a business perspective. I firmly believe that a simulation application like this can prove to be of immense benefit to creating content for real-world systems by serving as a content creation tool to enhance a content pipeline. Empowering artists who are not software experts is the key to a high quality and efficient content pipeline.
